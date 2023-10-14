@@ -12,31 +12,46 @@
 
 Pertama, kita lakukan konfigurasi IP dari setiap server
 #### Pandudewanata
-Image1
+
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/36468ad9-72cc-4d16-b785-f2fc351e47ed)
 
 ### Switch 1
 ----------------------------------------------------------------
 #### Nakula
-Image
+
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/a1697087-20cf-49ee-98d8-0ed0fb9c423f)
 
 #### Sadewa
-Image
+
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/f4b114c3-c6dc-4ae0-a742-50a41c5c34db)
 
 #### Yudhistira
 
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/a51e81cd-4a55-40d8-9ffa-5c13735baad2)
+
 #### Werkudara
 
-
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/0e2d7cfb-8dd7-4ca7-8451-127a1e5b1efa)
 
 ### Switch 2
 ----------------------------------------------------------------
+#### Arjuna
+
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/739c058f-fdc8-469e-98a8-e1a2b9f16e2e)
+
+### Switch 3
+----------------------------------------------------------------
 #### Prabukusuma
+
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/214feb3b-e12b-41f3-91e3-5ee89b29572b)
 
 #### Abimanyu
 
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/50611f57-56e9-439c-8c1d-6e40467a54dc)
+
 #### Wisanggeni
 
-
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/d065ad0f-e80f-406f-8cd7-55a602421da5)
 
 Setelah konfigurasi berhasil, kita mendeklarasikan iptables pada .bashrc
 
@@ -49,6 +64,10 @@ Selanjutnya, kita masukkan ```nameserver 192.168.122``` ke ```/etc/resolv.conf``
 ```bash
 echo nameserver 192.168.122.1 >> /etc/resolv.conf
 ```
+
+Jika konfigurasi berhasil, maka :
+
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/1d260f1f-bf8d-4837-a20c-577170b464d9)
 
 ## Soal 2
 ### Buatlah website utama pada node arjuna dengan akses ke arjuna.yyy.com dengan alias www.arjuna.yyy.com dengan yyy merupakan kode kelompok.
@@ -86,15 +105,25 @@ file "/etc/bind/jarkom/abimanyu.B08.com";
 
 - Make directory jarkom pada /etc/bind
 - Konfigurasi /etc/bind.jarkom/arjuna.B08.com
+  
+  ![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/c69e79f6-95f2-40a1-b52d-2b701b71176f)
+
 - Konfigurasi /etc/bind/jarkom/abimanyu.B08.com
 
+  ![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/de4b5796-833e-4e54-a4d0-075064659a04)
+
 Hasil :
+
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/c2a3db2f-bd17-4d44-91b5-4aacd395e73f)
 
 ## Soal 4
 ### Kemudian, karena terdapat beberapa web yang harus di-deploy, buatlah subdomain parikesit.abimanyu.yyy.com yang diatur DNS-nya di Yudhistira dan mengarah ke Abimanyu.
 
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/a15f1ff6-9a11-43ef-8c3a-3cb5bf53641e)
+
 Hasil :
 
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/1ea55e14-0846-49f6-af8a-e99996a1f5d8)
 
 ## Soal 5
 ### Buat juga reverse domain untuk domain utama. (Abimanyu saja yang direverse)
@@ -110,6 +139,9 @@ cp /etc/bind/db.local /etc/bind/jarkom/2.182.192.in-addr.arpa
 
 Selanjutnya
 - Edit named.conf.local
+  
+  ![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/c4d5b42e-02f4-4187-b2b4-736d9a5a0652)
+
 - Edit /etc/bind/[1 atau 2].182.192.in-addr.arpa
   - Arjuna
     ```conf
@@ -129,10 +161,14 @@ Selanjutnya
 Jangan lupa untuk melakukan service bind9 restart. Kita akan
 melakukan test di client (Sadewa). Hasilnya adalah
 
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/7b2041fe-8361-4fda-a9e4-36504aa0254e)
+
 ## Soal 6
 ### Agar dapat tetap dihubungi ketika DNS Server Yudhistira bermasalah, buat juga Werkudara sebagai DNS Slave untuk domain utama.
 
 Untuk melakukan DNS Slave, kita melakukan konfigurasi pada DNS Master (Yudhistira) di named.conf.local
+
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/771cee11-1622-4d5a-9f57-84572e3d2637)
 
 Selanjutnya, kita lakukan konfigurasi pada Server Slave (Werkudara) sebagai berikut
 ```bash
@@ -143,13 +179,20 @@ service bind9 start
 
 Setelahnya, kita konfigurasi named.conf.local pada Werkudara :
 
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/088cf22d-1013-4aea-a00c-6cca516ac805)
+
 Untuk melakukan test, kita mematikan service pada Yudhistira terlebih dulu, kemudian kita lakukan test pada Client server
 
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/5820e24e-2b4c-4b84-ba55-855f257c25ae)
+
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/4bbba51a-1a3a-4326-942b-6531ea9627e8)
 
 ## Soal 7
 ### Seperti yang kita tahu karena banyak sekali informasi yang harus diterima, buatlah subdomain khusus untuk perang yaitu baratayuda.abimanyu.yyy.com dengan alias www.baratayuda.abimanyu.yyy.com yang didelegasikan dari Yudhistira ke Werkudara dengan IP menuju ke Abimanyu dalam folder Baratayuda.
 
 Kita menambahkan
+
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/4614754e-206d-4c1b-a8c1-d675b2b94d23)
 
 ```bash
 ns1        IN    NS    192.182.1.5
@@ -164,10 +207,16 @@ allow-query(any;);
 
 Setelah itu, kita lakukan konfigurasi pada server Werkudara dengan menambahkan named.conf.local
 
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/5d9f5435-114f-4821-b0e7-d30540c34439)
+
 Kemudian, kita lakukan konfigurasi pada /etc/bind/delegasi/baratayuda.abimanyu.B08.com
+
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/7a70ca69-2925-4ab1-a7af-0717003ac28d)
 
 Selanjutnya, kita lakukan service bind9 restart pada kedua server.
 Untuk melakukan testing, kita lakukan ping dari server client
+
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/11c63c3c-2c84-40b5-9875-5162494befc7)
 
 Kita berhasil melakukan ping pada baratayuda.abimanyu.B08.com dan www.baratayuda.abimanyu.B08.com
 
@@ -177,7 +226,11 @@ Kita berhasil melakukan ping pada baratayuda.abimanyu.B08.com dan www.baratayuda
 
 Untuk menambahkan subdomain rjp, kita hanya perlu menambahkannya di /etc/bind/delegasi/baratayuda.abimanyu.B08.com
 
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/26d79f18-31ac-4306-aa48-26ea02cd8b2a)
+
 Hasil :
+
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/4490db90-a982-4855-971a-059e70cc9e1f)
 
 ## Soal 9
 ### Arjuna merupakan suatu Load Balancer Nginx dengan tiga worker (yang juga menggunakan nginx sebagai web server) yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Lakukan deployment pada masing-masing worker.
@@ -194,14 +247,22 @@ Kemudian, kita juga coba mengakses masing-masing localhost dengan lynx
 
 - Prabukusuma
 
+  ![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/4104e605-a2d9-49a4-b8a5-9051cd08cc2b)
+
 - Abimanyu
 
+  ![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/5f38a69d-d0c0-41a9-9c69-a7f5d5d82ec8)
+
 - Wisanggeni
+
+  ![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/886ec062-7448-4a6b-b577-6f63ebb98ce4)
 
 ## Soal 10
 ### Kemudian gunakan algoritma Round Robin untuk Load Balancer pada Arjuna. Gunakan server_name pada soal nomor 1. Untuk melakukan pengecekan akses alamat web tersebut kemudian pastikan worker yang digunakan untuk menangani permintaan akan berganti ganti secara acak. Untuk webserver di masing-masing worker wajib berjalan di port 8001-8003.
 
 Kita konfigurasi nginx menggunakan algoritma round robin. Pertama, kita akses server arjuna dan konfigurasi di /etc/nginx/sites-available/lb-jarkom dengan syntax
+
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/9e510fb9-f50c-4c2e-930b-95a0156587ee)
 
 Selanjutnya, kita buat symlink yang mengkoneksikan antara sites-available dan sites-enabled
 
@@ -245,9 +306,15 @@ Selanjutnya, kita cek di client apakah sudah berhasil atau belum dengan lynx loc
 
 - Prabukusuma
 
+  ![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/c7f0be0a-b56b-4520-b4e1-2c16bcd3021d)
+
 - Abimanyu
 
+  ![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/0cf31910-d7cf-4da3-8a03-d616245cc866)
+
 - Wisanggeni
+
+  ![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/15387c25-bae1-475f-acf2-6db1d49c20b2)
 
 
 ## Soal 11
@@ -270,6 +337,9 @@ DocumentRoot /var/www/html
 
 Setelah selesai kita coba restart apache2 nya dan kita coba testing dengan cara lynx arjuna.B08.com/home.html di server abimanyu tersebut
 
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/7dad5d2a-8858-40cb-8dba-f917f34a42ae)
+
+
 ## Soal 12
 ###
 
@@ -283,6 +353,8 @@ Alias "/js" "/var/www/parikesit.abimanyu.B08/public/js"
 ```
 
 Hasil :
+
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/f0e43118-7714-437a-ae04-b32d0bc98f96)
 
 
 ## Soal 17
@@ -315,10 +387,14 @@ Selanjutnya, kita cek apakah port 14400 dan 14000 sudah terbuka dengan
 netstat -nltp | grep apache
 ```
 
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/4c5c401a-fd2c-453e-948e-d457999b29bb)
+
 Hasil :
 
+![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/d43e6a79-f8bc-4dd0-b511-ca66ad8c709e)
 
-## Soal 17
+
+## Soal 18
 ### Untuk mengaksesnya buatlah autentikasi username berupa “Wayang” dan password “baratayudayyy” dengan yyy merupakan kode kelompok. Letakkan DocumentRoot pada /var/www/rjp.baratayuda.abimanyu.yyy.
 
 Pertama, kita install apache2 dan apache2-utils
