@@ -270,3 +270,81 @@ DocumentRoot /var/www/html
 
 Setelah selesai kita coba restart apache2 nya dan kita coba testing dengan cara lynx arjuna.B08.com/home.html di server abimanyu tersebut
 
+## Soal 12
+###
+
+## Soal 16
+### Buatlah suatu konfigurasi virtual host agar file asset www.parikesit.abimanyu.yyy.com/public/js menjadi www.parikesit.abimanyu.yyy.com/js
+
+Untuk membuat nama alias, kita dapat menambahkan script :
+
+```bash
+Alias "/js" "/var/www/parikesit.abimanyu.B08/public/js"
+```
+
+Hasil :
+
+
+## Soal 17
+### Agar aman, buatlah konfigurasi agar www.rjp.baratayuda.abimanyu.yyy.com hanya dapat diakses melalui port 14000 dan 14400.
+
+Pertama, kita pindahkan source dari soal ke /var/www/rjp.baratayuda.abimanyu.B08
+
+```bash
+<VirtualHost *:14000 *:14400 >
+    	ServerName rjp.baratayuda.abimanyu.B08.com
+
+    	ServerAdmin webmaster@localhost
+    	DocumentRoot /var/www/rjp.baratayuda.abimanyu.B08
+    	ServerAlias www.rjp.baratayuda.abimanyu.B08.com
+
+    	ErrorLog ${APACHE_LOG_DIR}/rjp_baratayuda_error.log
+    	CustomLog ${APACHE_LOG_DIR}/rjp_baratayuda_access.log combined
+</VirtualHost>
+```
+
+Kemudian, kita tambahkan port di /etc/apache2/ports.conf
+
+```bash
+Listen 14000
+Listen 14400
+```
+
+Selanjutnya, kita cek apakah port 14400 dan 14000 sudah terbuka dengan
+```bash
+netstat -nltp | grep apache
+```
+
+Hasil :
+
+
+## Soal 17
+### Untuk mengaksesnya buatlah autentikasi username berupa “Wayang” dan password “baratayudayyy” dengan yyy merupakan kode kelompok. Letakkan DocumentRoot pada /var/www/rjp.baratayuda.abimanyu.yyy.
+
+Pertama, kita install apache2 dan apache2-utils
+
+```bash
+sudo apt-get update
+sudo apt-get install apache2 apache2-utils
+```
+
+Kemudian, kita buat username dan password dengan
+
+```bash
+htpasswd -nb Wayang baratayudab13 > /etc/apache2/.htpasswd
+```
+
+Kemudian masukan password baratayudab13 dan tambahkan script di sites-available/rjp.baratayuda.abimanyu.B08 dengan
+
+```bash
+      <Directory />
+            	Options FollowSymLinks
+            	AllowOverride None
+    	</Directory>
+    	<Directory /var/www/rjp.baratayuda.abimanyu.b13.com>
+            	AuthType Basic
+            	AuthName "Restricted Content"
+            	AuthUserFile /etc/apache2/.htpasswd
+            	Require valid-user
+    	</Directory>
+```
