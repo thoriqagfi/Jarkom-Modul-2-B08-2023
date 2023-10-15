@@ -339,9 +339,141 @@ Setelah selesai kita coba restart apache2 nya dan kita coba testing dengan cara 
 
 ![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/7dad5d2a-8858-40cb-8dba-f917f34a42ae)
 
-
 ## Soal 12
-###
+### Setelah itu ubahlah agar url www.abimanyu.yyy.com/index.php/home menjadi www.abimanyu.yyy.com/home.
+
+Untuk membuat alias baru, maka kita harus merubah config apache2 dari abimanyu, dan menambahkan line dibawah
+
+```bash
+ <Directory /var/www/abimanyu.B08>
+     Options +Indexes
+ </Directory>
+
+ Alias "/home" "/var/www/abimanyu.B08/index.php/home"
+```
+
+<img width="693" alt="Screenshot 2023-10-15 at 13 24 36" src="https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/86884506/a4eff642-7312-4f21-a529-649cdec21ef1">
+
+hasil : 
+
+<img width="650" alt="Screenshot 2023-10-15 at 13 27 23" src="https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/86884506/a6cba9ba-f092-4c00-b2a9-a9f349ff7c86">
+
+
+## Soal 13
+### Selain itu, pada subdomain www.parikesit.abimanyu.yyy.com, DocumentRoot disimpan pada /var/www/parikesit.abimanyu.yyy
+
+untuk ini kita harus membuat config untuk parikesit.abimanyu.B08.com 
+
+```bash
+<VirtualHost *:80 >
+    	ServerAdmin webmaster@localhost
+      ServerName parikesit.abimanyu.B08.com
+    	DocumentRoot /var/www/pariketsit.abimanyu.B08
+    	ServerAlias www.parikesit.abimanyu.B08.com
+
+      <Directory /var/www/parikesit.abimanyu.B08.com>
+       Options +Indexes
+       </Directory>
+
+     Alias "/home" "/var/www/parikesit.abimanyu.B08/index.php/home"
+
+    	ErrorLog ${APACHE_LOG_DIR}/rjp_baratayuda_error.log
+    	CustomLog ${APACHE_LOG_DIR}/rjp_baratayuda_access.log combined
+</VirtualHost>
+```
+
+lalu lakukan service restart apache2 dan a2ensite apabila diperlukan. 
+dan hasilnya adalah : 
+
+<img width="710" alt="Screenshot 2023-10-15 at 13 13 18" src="https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/86884506/ddb60825-3b79-4e7c-99f2-877d950e93aa">
+
+
+
+## Soal 14
+### Pada subdomain tersebut folder /public hanya dapat melakukan directory listing sedangkan pada folder /secret tidak dapat diakses (403 Forbidden).
+
+maka kita perlu menambahkan pada config parikesit, dimana kita perlu menambahkan +indexes dan -Indexes untuk secret nya agar tidak terlihat
+
+```bash
+<VirtualHost *:80 >
+    	ServerAdmin webmaster@localhost
+      ServerName parikesit.abimanyu.B08.com
+    	DocumentRoot /var/www/pariketsit.abimanyu.B08
+    	ServerAlias www.parikesit.abimanyu.B08.com
+
+      <Directory /var/www/parikesit.abimanyu.B08.com>
+       Options +Indexes
+       </Directory>
+      <Directory /var/www/parikesit.abimanyu.B08/public>
+       Options +Indexes
+       </Directory>
+      <Directory /var/www/pariketsit.abimanyu.B08/secret>
+       Options -Indexes
+       </Directory>
+
+     Alias "/home" "/var/www/parikesit.abimanyu.B08/index.php/home"
+
+    	ErrorLog ${APACHE_LOG_DIR}/rjp_baratayuda_error.log
+    	CustomLog ${APACHE_LOG_DIR}/rjp_baratayuda_access.log combined
+</VirtualHost>
+```
+
+maka hasilnya ketika di lynx adalah :
+
+/public
+
+<img width="637" alt="Screenshot 2023-10-15 at 14 00 05" src="https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/86884506/5666e3af-a515-486e-a240-d1749314fa34">
+
+
+/secret
+
+<img width="511" alt="Screenshot 2023-10-15 at 13 58 13" src="https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/86884506/a2b9466c-3824-4969-b03a-9c9a0c75db5e">
+
+## Soal 15
+### Buatlah kustomisasi halaman error pada folder /error untuk mengganti error kode pada Apache. Error kode yang perlu diganti adalah 404 Not Found dan 403 Forbidden.
+
+Untuk melakukan kustomisasi error, kita harus menambahkan pada /etc/apache2/sites-available/parikesit.abimanyu.B08.com
+
+```bash
+ErrorDocument 404 /error/404.html
+ErrorDocument 403 /error/403.html
+
+```
+
+hingga confignya akan menjadi 
+
+```bash
+<VirtualHost *:80 >
+    	ServerAdmin webmaster@localhost
+      ServerName parikesit.abimanyu.B08.com
+    	DocumentRoot /var/www/pariketsit.abimanyu.B08
+    	ServerAlias www.parikesit.abimanyu.B08.com
+
+      <Directory /var/www/parikesit.abimanyu.B08.com>
+       Options +Indexes
+       </Directory>
+      <Directory /var/www/parikesit.abimanyu.B08/public>
+       Options +Indexes
+       </Directory>
+      <Directory /var/www/pariketsit.abimanyu.B08/secret>
+       Options -Indexes
+       </Directory>
+
+      Alias "/home" "/var/www/parikesit.abimanyu.B08/index.php/home"
+      ErrorDocument 404 /error/404.html
+      ErrorDocument 403 /error/403.html  
+
+    	ErrorLog ${APACHE_LOG_DIR}/rjp_baratayuda_error.log
+    	CustomLog ${APACHE_LOG_DIR}/rjp_baratayuda_access.log combined
+</VirtualHost>
+```
+
+hasilnya : 
+
+<img width="648" alt="Screenshot 2023-10-15 at 14 02 57" src="https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/86884506/8221ed86-d828-43c7-8131-66f6a51e533c">
+
+<img width="642" alt="Screenshot 2023-10-15 at 14 03 08" src="https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/86884506/288caa4d-c882-406c-8e7e-f0edc9898d9b">
+
 
 ## Soal 16
 ### Buatlah suatu konfigurasi virtual host agar file asset www.parikesit.abimanyu.yyy.com/public/js menjadi www.parikesit.abimanyu.yyy.com/js
