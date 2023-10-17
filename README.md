@@ -105,7 +105,7 @@ file "/etc/bind/jarkom/abimanyu.B08.com";
 
 - Make directory jarkom pada /etc/bind
 - Konfigurasi /etc/bind.jarkom/arjuna.B08.com
-  
+
   ![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/c69e79f6-95f2-40a1-b52d-2b701b71176f)
 
 - Konfigurasi /etc/bind/jarkom/abimanyu.B08.com
@@ -139,7 +139,7 @@ cp /etc/bind/db.local /etc/bind/jarkom/2.182.192.in-addr.arpa
 
 Selanjutnya
 - Edit named.conf.local
-  
+
   ![image](https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/92865110/c4d5b42e-02f4-4187-b2b4-736d9a5a0652)
 
 - Edit /etc/bind/[1 atau 2].182.192.in-addr.arpa
@@ -267,7 +267,7 @@ Kita konfigurasi nginx menggunakan algoritma round robin. Pertama, kita akses se
 Selanjutnya, kita buat symlink yang mengkoneksikan antara sites-available dan sites-enabled
 
 ```bash
-ln -s /etc/nginx/sites-available/arjuna.b13.com /etc/nginx/sites-enabled
+ln -s /etc/nginx/sites-available/arjuna.B08.com /etc/nginx/sites-enabled
 ```
 
 Setelah itu, kita melakukan konfigurasi pada 3 worker server, yaitu Prabukusuma, Abimanyu, Wisanggeni. Sebelum melakukan konfigurasi, kita insatll tools php dan php-fpm
@@ -354,7 +354,7 @@ Untuk membuat alias baru, maka kita harus merubah config apache2 dari abimanyu, 
 
 <img width="693" alt="Screenshot 2023-10-15 at 13 24 36" src="https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/86884506/a4eff642-7312-4f21-a529-649cdec21ef1">
 
-hasil : 
+hasil :
 
 <img width="650" alt="Screenshot 2023-10-15 at 13 27 23" src="https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/86884506/a6cba9ba-f092-4c00-b2a9-a9f349ff7c86">
 
@@ -362,7 +362,7 @@ hasil :
 ## Soal 13
 ### Selain itu, pada subdomain www.parikesit.abimanyu.yyy.com, DocumentRoot disimpan pada /var/www/parikesit.abimanyu.yyy
 
-untuk ini kita harus membuat config untuk parikesit.abimanyu.B08.com 
+untuk ini kita harus membuat config untuk parikesit.abimanyu.B08.com
 
 ```bash
 <VirtualHost *:80 >
@@ -382,8 +382,8 @@ untuk ini kita harus membuat config untuk parikesit.abimanyu.B08.com
 </VirtualHost>
 ```
 
-lalu lakukan service restart apache2 dan a2ensite apabila diperlukan. 
-dan hasilnya adalah : 
+lalu lakukan service restart apache2 dan a2ensite apabila diperlukan.
+dan hasilnya adalah :
 
 <img width="710" alt="Screenshot 2023-10-15 at 13 13 18" src="https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/86884506/ddb60825-3b79-4e7c-99f2-877d950e93aa">
 
@@ -440,7 +440,7 @@ ErrorDocument 403 /error/403.html
 
 ```
 
-hingga confignya akan menjadi 
+hingga confignya akan menjadi
 
 ```bash
 <VirtualHost *:80 >
@@ -461,14 +461,14 @@ hingga confignya akan menjadi
 
       Alias "/home" "/var/www/parikesit.abimanyu.B08/index.php/home"
       ErrorDocument 404 /error/404.html
-      ErrorDocument 403 /error/403.html  
+      ErrorDocument 403 /error/403.html
 
     	ErrorLog ${APACHE_LOG_DIR}/rjp_baratayuda_error.log
     	CustomLog ${APACHE_LOG_DIR}/rjp_baratayuda_access.log combined
 </VirtualHost>
 ```
 
-hasilnya : 
+hasilnya :
 
 <img width="648" alt="Screenshot 2023-10-15 at 14 02 57" src="https://github.com/thoriqagfi/Jarkom-Modul-2-B08-2023/assets/86884506/8221ed86-d828-43c7-8131-66f6a51e533c">
 
@@ -539,20 +539,105 @@ sudo apt-get install apache2 apache2-utils
 Kemudian, kita buat username dan password dengan
 
 ```bash
-htpasswd -nb Wayang baratayudab13 > /etc/apache2/.htpasswd
+htpasswd -nb Wayang baratayudab08 > /etc/apache2/.htpasswd
 ```
 
-Kemudian masukan password baratayudab13 dan tambahkan script di sites-available/rjp.baratayuda.abimanyu.B08 dengan
+Kemudian masukan password baratayudaB08 dan tambahkan script di sites-available/rjp.baratayuda.abimanyu.B08 dengan
 
 ```bash
       <Directory />
             	Options FollowSymLinks
             	AllowOverride None
     	</Directory>
-    	<Directory /var/www/rjp.baratayuda.abimanyu.b13.com>
+    	<Directory /var/www/rjp.baratayuda.abimanyu.B08.com>
             	AuthType Basic
             	AuthName "Restricted Content"
             	AuthUserFile /etc/apache2/.htpasswd
             	Require valid-user
     	</Directory>
+```
+
+
+## Soal 19
+### Buatlah agar setiap kali mengakses IP dari Abimanyu akan secara otomatis dialihkan ke www.abimanyu.yyy.com (alias)
+
+Kita ubah httaccess untuk forward ke domain tersebut, tetapi kita dulu a2enmod rewrite sudah menyalah dengan cara menjalankan
+
+```bash
+a2enmod rewrite
+```
+
+Setelah itu kita setting .htaccess menjadi sebagai berikut sebagai berikut :
+
+```bash
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} ^192\.182\.3\.3$
+RewriteRule ^(.*) http://www.abimanyu.B08.com/$1 [L,R=301]
+```
+
+Kemudian tambahakan script berikut ini untuk menjalankan .
+
+```bash
+ # Soal No 19
+    	<Directory /var/www/abimanyu.B08.com>
+            	Options +FollowSymLinks -Multiviews
+            	AllowOverride All
+    	</Directory>
+```
+
+
+## Soal 20
+### ## Soal 19
+### Buatlah agar setiap kali mengakses IP dari Abimanyu akan secara otomatis dialihkan ke www.abimanyu.yyy.com (alias)
+
+Pertama, kita tambahkan .htaccess pada /var/www/parikesit.abimanyu.B08.com kemudian tambahkan syntax dibawah ini
+
+```bash
+RewriteEngine On
+RewriteBase /
+
+# Check if the request is not already /abimanyu.png
+RewriteCond %{REQUEST_URI} !^/abimanyu.png$ [NC]
+
+# Redirect requests for images containing "abimanyu" to abimanyu.png
+RewriteCond %{REQUEST_URI} abimanyu [NC]
+RewriteRule \.(jpg|jpeg|png|gif)$ http://www.parikesit.abimanyu.B08.com/abimanyu.png [L,R=301]
+```
+
+Kemudian tambahakn alias dengan cara ubah parikesit.abimanyu.B08.com.conf menjadi
+
+```bash
+<VirtualHost *:80>
+    	ServerName parikesit.abimanyu.B08.com
+
+    	ErrorDocument 404 /error/404.html
+    	ErrorDocument 403 /error/403.html
+
+    	ServerAdmin webmaster@localhost
+    	DocumentRoot /var/www/parikesit.abimanyu.B08.com
+    	ServerAlias www.parikesit.abimanyu.B08.com
+
+    	# Soal No 14
+    	<Directory /var/www/abimanyu.B08.com/public>
+            	Options +Indexes
+    	</Directory>
+
+    	<Directory /var/www/parikesit.abimanyu.B08.com/secret>
+            	Options -Indexes
+    	</Directory>
+
+    	# SOal No 16
+    	Alias "/js" "/var/www/parikesit.abimanyu.B08.com/public/js"
+
+    	# Soal No 20
+     	<Directory /var/www/parikesit.abimanyu.B08.com>
+            	Options +FollowSymLinks -Multiviews
+            	AllowOverride All
+    	</Directory>
+    	Alias "/abimanyu.png" "/var/www/parikesit.abimanyu.B08.com/public/images/abimanyu.png"
+
+    	ErrorLog ${APACHE_LOG_DIR}/parikesit_error.log
+    	CustomLog ${APACHE_LOG_DIR}/parikesit_access.log combined
+</VirtualHost>
 ```
